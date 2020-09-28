@@ -100,3 +100,10 @@ p=ProxySpace.push(s);//gotta be using the ol' ProxySpace
 
 
 
+~sound = {SinOsc.ar(LFNoise0.kr(1).range(100,200))};
+~sound.play(0,2)
+
+~trig = {Trig.ar(~sound,0.1) * FSinOsc.ar(800,0.5)};
+~trig.play(0,2);
+~sound.stop;
+~trig.stop;
