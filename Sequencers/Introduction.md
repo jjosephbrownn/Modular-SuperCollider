@@ -19,11 +19,21 @@ Without going into what a "demand rate" value is (the documentation is very obsc
 	freq = Demand.kr(~clock,0,notes)};
 )`
 
-This is a simple random sequencer.  The pitches are chose from the Drand UGen which cycles infinitely in a similar way to Prand.  Demand.kr is triggered by ~clock (which could be any trigger or clock signal) and Drand UGen is called, firing out a random pitch from the array.  The second argument is a reset value which can be used to start the UGens again.  I just set this to 0 as I always write my earlier demand UGens to cycle until I tell them to stop.
+This is a simple random sequencer.  The pitches are chose from the Drand UGen which cycles infinitely in a similar way to Prand.  Demand.kr is triggered by ~clock (which could be any trigger or clock signal) and Drand UGen is called, firing out a random pitch from the array.  In Proxy Space this could then be plugged into some sort of sound object as the output of ~step is a control rate value.  (The second argument is a reset value which can be used to start the UGens again.  I just set this to 0 as I always write my earlier demand UGens to cycle until I tell them to stop).
+
+`(
+~harp = {
+	var osc1,osc2,env,sig,filt;
+
+	env = EnvGen.kr(Env.adsr(0.005,0.25,0.25,0.1),~clock);
+
+	osc1 = Resonz.ar(Pulse.ar(~step.kr, 0.5) * env,Latch.kr(LFNoise0.kr(1).range(100,1000),~clock),0.5);
+};
+)`
 
 Apart from the obvious selection of pitches this could be used to trigger samples (using a sort of "on off" system of 0s and 1s) or mutate other clocks and synths in inventive ways I havent thought of yet.
 
-I messed around a lot with this and Ive found it to be both the most interesting and simplest way of sequencing in SC.  Pbinds require a SynthDefs which can be complex and time consuming and the marsh of Routines gets too abstract too quickly (and also requires a hell of a lot of code).  This method for me sits in a comfortable middle position - it allows you to sequence hastily written sound sources while offering a nice amount of musical structure.  Remember, we're trying to emulate modular synthesis performance - sometimes its better to start from scratch.
+I messed around a lot with this and I've found it to be both the most interesting and simplest way of sequencing in SC.  Pbinds require a SynthDefs which can be complex and time consuming and the marsh of Routines gets too abstract too quickly (and also requires a hell of a lot of code).  This method for me sits in a comfortable middle position - it allows you to sequence hastily written sound sources while offering a nice amount of musical structure.  Remember, we're trying to emulate modular synthesis performance - sometimes its better to start from scratch.
 
 
 
