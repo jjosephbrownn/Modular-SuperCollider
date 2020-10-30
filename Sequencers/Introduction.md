@@ -12,11 +12,11 @@ Anyway, *sequencers*.  These tutorials run off a cool thing I found which doesn'
 
 Without going into what a "demand rate" value is (the documentation is very obscure at this point) a basic sequencer would have a Demand.kr that calls a UGen specified as its third argument when it is triggered (by anything).  The UGen has to be demand rate also - these are fairly familiar as they look a lot like Pseq, Prand etc.  Basically any pattern UGen probably has a demand UGen equivalent: Drand, Dwhite, Dseq.
 
-`(<br />
-~step = {<br />
-	arg notes,freq;<br />
-	notes = Drand([100,200,300,400,500,600],inf);<br />
-	freq = Demand.kr(~clock,0,notes)};<br />
+`(  
+~step = {  
+	arg notes,freq;  
+	notes = Drand([100,200,300,400,500,600],inf);  
+	freq = Demand.kr(~clock,0,notes)};  
 )`
 
 This is a simple random sequencer.  The pitches are chose from the Drand UGen which cycles infinitely in a similar way to Prand.  Demand.kr is triggered by ~clock (which could be any trigger or clock signal) and Drand UGen is called, firing out a random pitch from the array.  In Proxy Space this could then be plugged into some sort of sound object as the output of ~step is a control rate value.  (The second argument is a reset value which can be used to start the UGens again.  I just set this to 0 as I always write my earlier demand UGens to cycle until I tell them to stop).
