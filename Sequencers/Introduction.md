@@ -28,9 +28,9 @@ This is a simple random sequencer.  The pitches are chose from the Drand UGen wh
 ```
 (
 ~harp = {
-	var osc1,osc2,env,sig,filt;
+	var osc,env;
 	env = EnvGen.kr(Env.adsr(0.005,0.25,0.25,0.1),~clock)
-	osc1 = Resonz.ar(Pulse.ar(~step.kr, 0.5) * env,Latch.kr(LFNoise0.kr(1).range(100,1000),~clock),0.5)};
+	osc = Resonz.ar(Pulse.ar(~step.kr, 0.5) * env,Latch.kr(LFNoise0.kr(1).range(100,1000),~clock),0.5)};
 )
 ```
 
